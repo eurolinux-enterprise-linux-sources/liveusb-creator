@@ -3,8 +3,8 @@
 %define	        label	    SL61LIVE
 
 Name:           liveusb-creator
-Version:        3.11.1
-Release:        6.0.sl6
+Version:        3.11.4
+Release:        6.1.sl6
 Summary:        A liveusb creator
 
 Group:          Applications/System
@@ -98,7 +98,12 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 
 %changelog
-* Tue Jul 05 2011 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.1-6.1.sl6
+* Thu Jul 28 2011 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.4-6.1.sl6
+- Update to 3.11.4 (source from fc15)
+- Link to SL61 LiveCDs
+- Change download link from ftp to http
+
+* Tue Jul 05 2011 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.1-6.0.sl6
 - add SL specific changes
 - Build for SL61, set lable to SL61LIVE
 

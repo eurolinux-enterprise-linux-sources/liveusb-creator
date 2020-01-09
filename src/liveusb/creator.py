@@ -63,8 +63,8 @@ class LiveUSBCreator(object):
     _drive = None       # mountpoint of the currently selected drive
     mb_per_sec = 0      # how many megabytes per second we can write
     log = None
-    ext_fstypes = ['ext2', 'ext3', 'ext4']
-    valid_fstypes = ['vfat', 'msdos'] + ext_fstypes
+    ext_fstypes = set(['ext2', 'ext3', 'ext4'])
+    valid_fstypes = set(['vfat', 'msdos']) | ext_fstypes
 
     drive = property(fget=lambda self: self.drives[self._drive],
                      fset=lambda self, d: self._set_drive(d))
@@ -424,11 +424,12 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
     def __init__(self, *args, **kw):
         super(LinuxLiveUSBCreator, self).__init__(*args, **kw)
         extlinux = self.get_extlinux_version()
-        if extlinux < 4:
+        if extlinux is None:
+            self.valid_fstypes -= self.ext_fstypes
+        elif extlinux < 4:
             self.log.debug(_('You are using an old version of syslinux-extlinux '
                     'that does not support the ext4 filesystem'))
-
-            self.valid_fstypes.remove('ext4')
+            self.valid_fstypes -= set(['ext4'])
 
     def detect_removable_drives(self, callback=None):
         """ Detect all removable USB storage devices using UDisks via D-Bus """
@@ -576,8 +577,8 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
                         'org.freedesktop.Hal.Device.Volume.AlreadyMounted':
                     self.log.debug('Device already mounted')
                 else:
-                    self.log.error('Unknown dbus exception:')
-                    self.log.exception(e)
+                    self.log.error('Unknown dbus exception while trying to '
+                                   'mount device: %s' % str(e))
             except Exception, e:
                 raise LiveUSBError(_("Unable to mount device: %s" % str(e)))
 
@@ -785,6 +786,10 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
 
     def bootable_partition(self):
         """ Ensure that the selected partition is flagged as bootable """
+        if self.drive.get('parent') is None:
+            self.log.debug('No partitions on device; not attempting to mark '
+                           'any paritions as bootable')
+            return
         import parted
         try:
             disk, partition = self.get_disk_partition()
@@ -840,7 +845,10 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
         self.popen('mkfs.vfat -F 32 %s' % self._drive)
 
     def get_mbr(self):
-        parent = str(self.drive.get('parent', self._drive))
+        parent = self.drive.get('parent', self._drive)
+        if parent is None:
+            parent = self._drive
+        parent = str(parent)
         self.log.debug('Checking the MBR of %s' % parent)
         drive = open(parent, 'rb')
         mbr = ''.join(['%02X' % ord(x) for x in drive.read(2)])
@@ -924,7 +932,6 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
             version = int(err.split()[1].split('.')[0])
         elif p.returncode == 127:
             self.log.warning('extlinux not found! Only FAT filesystems will be supported')
-            self.valid_fstypes.remove('ext4')
         else:
             self.log.debug('Unknown return code from extlinux: %s' % p.returncode)
             self.log.debug('stdout: %s\nstderr: %s' % (out, err))
