@@ -1,0 +1,38 @@
+releases = (
+
+   {
+        'name': 'LiveCD SL62 (i386)',
+        'url': 'http://ftp.scientificlinux.org/linux/scientific/6.2/i386/iso/SL-62-i386-2012-02-16-LiveCD.iso',
+        'sha256': '6bf47c26898924b750ea7f804b0bb837c4a1c21c8a022a884e879219b023fbe0',
+    },
+
+   {
+        'name': 'LiveDVD SL62 (i386)',
+        'url': 'http://ftp.scientificlinux.org/linux/scientific/6.2/i386/iso/SL-62-i386-2012-02-16-LiveDVD.iso',
+        'sha256': '5fddd964eecdc75057d230bd19dcfe5e712672da3e88d38166eee7c1500e604f',
+    },
+
+   {
+        'name': 'LiveMiniCD SL62 (i386)',
+        'url': 'http://ftp.scientificlinux.org/linux/scientific/6.2/i386/iso/SL-62-i386-2012-02-16-LiveMiniCD.iso',
+        'sha256': '92dbe5679598eb65d0a1c0823d28a6ec867bbf1fd7b1423048d3196c5c11c59e',
+    },
+
+   {
+        'name': 'LiveCD SL62 (x86_64)',
+        'url': 'http://ftp.scientificlinux.org/linux/scientific/6.2/x86_64/iso/SL-62-x86_64-2012-02-16-LiveCD.iso',
+        'sha256': '57c7df877cd495bc2d6bed907cf72ad3568b9e385d57f35f0b72447d69b97f55',
+    },
+
+   {
+        'name': 'LiveDVD SL62 (x86_64)',
+        'url': 'http://ftp.scientificlinux.org/linux/scientific/6.2/x86_64/iso/SL-62-x86_64-2012-02-16-LiveDVD.iso',
+        'sha256': '6231c6595174e84c1f63acf38281a19b26a12a0f7f3e25455fd261ed7db98c3b',
+    },
+   {
+        'name': 'LiveMiniCD SL62 (x86_64)',
+        'url': 'http://ftp.scientificlinux.org/linux/scientific/6.2/x86_64/iso/SL-62-x86_64-2012-02-16-LiveMiniCD.iso',
+        'sha256': '61d297bd5532a179f2a84427144d419802e1f4eba0ca44e20346dbcb63f518fc',
+    },
+
+)

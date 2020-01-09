@@ -1,10 +1,10 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-%define	        label	    SL61LIVE
+%define	        label	    SL62LIVE
 
 Name:           liveusb-creator
 Version:        3.11.6
-Release:        6.1.sl6
+Release:        6.2.sl6
 Summary:        A liveusb creator
 
 Group:          Applications/System
@@ -99,6 +99,9 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 
 %changelog
+* Fri Feb 17 2012 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.6-6.2.sl6
+- Point to SL62 LiveCDs, set lable to SL62LIVE
+
 * Mon Jan 02 2012 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.6-6.1.sl6
 - Update to 3.11.6 (from epel)
 - Add syslinux-extlinux as requirement
