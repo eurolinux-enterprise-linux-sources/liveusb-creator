@@ -1,0 +1,38 @@
+releases = (
+
+   {
+        'name': 'LiveCD SL6 (i686)',
+        'url': 'ftp://ftp.scientificlinux.org/linux/scientific/6.0/i386/iso/SL-60-i386-2011-03-07-LiveCD.iso',
+        'sha256': '1d3159795505021b5c66eb5daddc6fc46ef2d742c530ef6b3cad7ecb04e8a358',
+    },
+
+   {
+        'name': 'LiveDVD SL6 (i686)',
+        'url': 'ftp://ftp.scientificlinux.org/linux/scientific/6.0/i386/iso/SL-60-i386-2011-03-07-LiveDVD.iso',
+        'sha256': '00eec444afa12f6b46159d707548e3141474045164d389f9397e55a57eb93afb',
+    },
+
+   {
+        'name': 'MiniLiveCD SL6 (i686)',
+        'url': 'ftp://ftp.scientificlinux.org/linux/scientific/6.0/i386/iso/SL-60-i386-2011-03-07-LiveMiniCD.iso',
+        'sha256': '75002355d74d47af5c7236487dc6afacc81b36d058aa846b95c6c3107668a20f',
+    },
+
+   {
+        'name': 'LiveCD SL6 (x86_64)',
+        'url': 'ftp://ftp.scientificlinux.org/linux/scientific/6.0/x86_64/iso/SL-60-x86_64-2011-03-07-LiveCD.iso',
+        'sha256': 'fa2f0ccf678140c231e6f0b0ee0f22d4cc6b461564139f9f530c392d7f1af7e5',
+    },
+
+   {
+        'name': 'LiveDVD SL6 (x86_64)',
+        'url': 'ftp://ftp.scientificlinux.org/linux/scientific/6.0/x86_64/iso/SL-60-x86_64-2011-03-07-LiveDVD.iso',
+        'sha256': '2c20935168479504ee62cafcd040a4515826beb9f593242fdcbe2fe01dd34ac3',
+    },
+   {
+        'name': 'MiniLiveCD SL6 (x86_64)',
+        'url': 'ftp://ftp.scientificlinux.org/linux/scientific/6.0/x86_64/iso/SL-60-x86_64-2011-03-07-LiveMiniCD.iso',
+        'sha256': '3492896ddf7469e67338d569000228aea1592ccacbd48ba5f7374fa4e2fae480',
+    },
+
+)
