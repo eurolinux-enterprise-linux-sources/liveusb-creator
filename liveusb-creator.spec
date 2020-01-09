@@ -1,10 +1,10 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-%define	        label	    SL62LIVE
+%define	        label	    SL63LIVE
 
 Name:           liveusb-creator
-Version:        3.11.6
-Release:        6.2.sl6
+Version:        3.11.7
+Release:        6.3.sl6
 Summary:        A liveusb creator
 
 Group:          Applications/System
@@ -25,6 +25,7 @@ Requires:       syslinux, PyQt4, usermode, isomd5sum
 Requires:       python-urlgrabber
 Requires:       pyparted >= 2.0
 Requires:       syslinux-extlinux
+Requires:       udisks
 
 %description
 A liveusb creator from LiveCD images like Scientific Linux, CentOS, Fedora
@@ -99,6 +100,10 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 
 %changelog
+* Mon Aug 27 2012 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.7-6.3.sl6
+- Update to 3.11.7
+- Point to SL63 LiveCDs, set lable to SL63LIVE
+
 * Fri Feb 17 2012 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.6-6.2.sl6
 - Point to SL62 LiveCDs, set lable to SL62LIVE
 

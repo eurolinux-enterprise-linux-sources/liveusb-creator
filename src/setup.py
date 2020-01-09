@@ -1,7 +1,7 @@
 from distutils.core import setup
 import sys, os
 
-VERSION = '3.11.6'
+VERSION = '3.11.7'
 
 LOCALE_DIR= '/usr/share/locale'
 
@@ -72,7 +72,7 @@ if sys.platform == 'win32':
                 "tools/syslinux.exe",
                 "tools/7z.exe",
                 "tools/7z.dll",
-                "tools/7zCon.sfx",
+                #"tools/7zCon.sfx",
                 "tools/7-Zip-License.txt",
             ],)
           ] + [(os.path.join(LOCALE_DIR, locale),
