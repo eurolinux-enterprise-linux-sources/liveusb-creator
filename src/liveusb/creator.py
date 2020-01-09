@@ -50,7 +50,7 @@ class LiveUSBCreator(object):
     """ An OS-independent parent class for Live USB Creators """
 
     iso = None          # the path to our live image
-    label = "FEDORA"    # if one doesn't already exist
+    label = "LIVE"      # if one doesn't already exist
     fstype = None       # the format of our usb stick
     drives = {}         # {device: {'label': label, 'mount': mountpoint}}
     overlay = 0         # size in mb of our persisten overlay
@@ -85,7 +85,7 @@ class LiveUSBCreator(object):
         self.handler.setFormatter(formatter)
         self.log.addHandler(self.handler)
 
-    def detect_removable_drives(self):
+    def detect_removable_drives(self, callback=None):
         """ This method should populate self.drives with removable devices """
         raise NotImplementedError
 
@@ -513,9 +513,6 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
             if callback:
                 callback()
 
-            if not len(self.drives):
-                raise LiveUSBError(_("Unable to find any USB drives"))
-
         def handle_error(error):
             self.log.error(str(error))
 
@@ -615,9 +612,7 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
             else:
                 raise LiveUSBError(_("Unsupported filesystem: %s" %
                                      self.fstype))
-        if self.drive['label']:
-            self.label = self.drive['label']
-        else:
+        if self.drive['label'] != self.label:
             self.log.info("Setting %s label to %s" % (self.drive['device'],
                                                       self.label))
             try:
@@ -633,7 +628,6 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
                                                         self.label))
             except LiveUSBError, e:
                 self.log.error("Unable to change volume label: %s" % str(e))
-                self.label = None
 
     def extract_iso(self):
         """ Extract self.iso to self.dest """
@@ -940,7 +934,7 @@ class LinuxLiveUSBCreator(LiveUSBCreator):
 
 class WindowsLiveUSBCreator(LiveUSBCreator):
 
-    def detect_removable_drives(self):
+    def detect_removable_drives(self, callback=None):
         import win32file, win32api, pywintypes
         self.drives = {}
         for drive in [l + ':' for l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']:
@@ -968,6 +962,8 @@ class WindowsLiveUSBCreator(LiveUSBCreator):
                 self.log.error(_("Error probing device"))
         if not len(self.drives):
             raise LiveUSBError(_("Unable to find any removable devices"))
+        if callback:
+            callback()
 
     def verify_filesystem(self):
         import win32api, win32file, pywintypes
@@ -982,16 +978,13 @@ class WindowsLiveUSBCreator(LiveUSBCreator):
                                  "and format your USB key with the FAT "
                                  "filesystem." % vol[-1]))
         self.fstype = 'vfat'
-        if vol[0] == '':
+        if vol[0] != self.label:
             try:
                 win32file.SetVolumeLabel(self.drive['device'], self.label)
                 self.log.debug("Set %s label to %s" % (self.drive['device'],
-                                                      self.label))
+                                                       self.label))
             except pywintypes.error, e:
                 self.log.warning("Unable to SetVolumeLabel: " + str(e))
-                self.label = None
-        else:
-            self.label = vol[0].replace(' ', '_')
 
     def get_free_bytes(self, device=None):
         """ Return the number of free bytes on our selected drive """
@@ -1103,10 +1096,12 @@ class WindowsLiveUSBCreator(LiveUSBCreator):
         if isinstance(cmd, basestring):
             cmd = cmd.split()
         prgmfiles = os.getenv('PROGRAMFILES')
-        paths = (prgmfiles, prgmfiles + ' (x86)', '.')
+        folder = 'LiveUSB Creator'
+        paths = [os.path.join(x, folder) for x in (prgmfiles, prgmfiles + ' (x86)')]
+        paths += [os.path.join(os.path.dirname(__file__), '..', '..'), '.']
         tool = None
         for path in paths:
-            exe = os.path.join(path, 'LiveUSB Creator', 'tools', '%s.exe' % cmd[0])
+            exe = os.path.join(path, 'tools', '%s.exe' % cmd[0])
             if os.path.exists(exe):
                 tool = '"%s"' % exe
                 break

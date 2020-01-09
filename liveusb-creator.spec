@@ -3,7 +3,7 @@
 %define	        label	    SL61LIVE
 
 Name:           liveusb-creator
-Version:        3.11.4
+Version:        3.11.6
 Release:        6.1.sl6
 Summary:        A liveusb creator
 
@@ -24,6 +24,7 @@ BuildRequires:  python-devel, python-setuptools, PyQt4-devel, desktop-file-utils
 Requires:       syslinux, PyQt4, usermode, isomd5sum
 Requires:       python-urlgrabber
 Requires:       pyparted >= 2.0
+Requires:       syslinux-extlinux
 
 %description
 A liveusb creator from LiveCD images like Scientific Linux, CentOS, Fedora
@@ -98,6 +99,11 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 
 %changelog
+* Mon Jan 02 2012 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.6-6.1.sl6
+- Update to 3.11.6 (from epel)
+- Add syslinux-extlinux as requirement
+- Still point to SL61 LiveCDs
+
 * Thu Jul 28 2011 Urs Beyerle <urs.beyerle@env.ethz.ch> - 3.11.4-6.1.sl6
 - Update to 3.11.4 (source from fc15)
 - Link to SL61 LiveCDs
